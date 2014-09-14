@@ -1,6 +1,6 @@
 ---
-title: 'Lab 1 - R Primer'
-author: "GE509"
+title: 'Lab 1 - R Primer' 
+author: "GE509: Rose Abramoff"
 date: "September 3, 2014"
 output: html_document
 ---
@@ -19,7 +19,7 @@ The R software we are using this semester is open-source statistical software th
 
 ## Getting this exercise
 
-This exercise is available off of http://github.com/mdietze and assumes that you will be working from within the RStudio editor with git installed. This requires a few steps:
+This exercise is available off of http://github.com/EcoForecast and assumes that you will be working from within the RStudio editor with git installed. This requires a few steps:
 
 0. Before installing RStudio, you'll want to make sure you have [installed R](http://cran.us.r-project.org/)
 1. RStudio can be downloaded for free from http://www.rstudio.com/
@@ -34,11 +34,11 @@ This exercise is available off of http://github.com/mdietze and assumes that you
   + To set your email, enter the following & hit Return: git config –global user.email “your.email@gmail.com”
   + You can now close this Shell window
   
-The bestest way to get a copy of this exercise, and all the other course exercises, is to click on the project pull-down menu in the top-right corner of RStudio and select "New Project...".  
+The bestest way to get a copy of this exercise, and all the other EcoForecast exercises, is to click on the project pull-down menu in the top-right corner of RStudio and select "New Project...".  
 
 Next, click "Version Control" and then "Git".
 
-Enter the following address in the Repository URL: https://github.com/mdietze/EE509.git
+Enter the following address in the Repository URL: https://github.com/dietze/EE509.git
 
 You can optionally choose to name the folder something different than EE509 (though be aware that many activities will assume this is the name of the folder) or have the folder saved somewhere other than your Home directory.
 
@@ -46,7 +46,7 @@ When you hit "Create Project" this will clone a copy of the git project from the
 
 If you anticipate making changes to a git project on GitHub then, instead of cloning from https://github.com/mdietze/EE509 you should go to that website and click on the "Fork" button in the top right corner. This requires that you have an account on GitHub, which is free and easy to set up. Once you fork the repository, this will make a copy to https://github.com/username/EE509 where _username_ is your GitHub username, and you can use that as your Repository URL.
 
-If you just can't get Git to work, you can download this activity from the same website, https://github.com/mdietze/EE509, by clicking on the "Download ZIP" button in the bottom right.
+If you just can't get Git to work, you can download this activity from the same website, https://github.com/EcoForecast/EF_Activities, by clicking on the "Download ZIP" button in the bottom right.
 
 Next, to be able to compile this document into HTML or any other format you will need to install the "knitr" library. From the "Packages" tab in the bottom right window click on "Install", enter knitr as the package name, and then click Install
 
@@ -136,23 +136,68 @@ Packages are installed using the ‘Install Packages’ button under the “Pack
 
 ### Questions:
 
-```
+
 1.	Evaluate the following:
-   a.	ln(1)
+   a.	ln(1) 
+```{r}
+log(1)
+``` 
    b.	ln(0)
+```{r}
+log(0)
+```
    c.	ln(e)
+```{r}
+log(exp(1))
+```
    d.	ln(-5)
+```{r}
+log(-5)
+```
    e.	-ln(5)
+```{r}
+-log(-5)
+```
    f.	ln(1/5)
+```{r}
+log(1/5)
+```
 g.	How does R represent when the output of a function is not a number?
+
+NaN
+
 2.	Why are we multiplying the results of the atan and atan2 functions by 180/pi? 
+
+We are doing this in order to convert radians to degrees.
+
 3.	How is the atan2 function different from the atan function? 
+
+It takes two arguments, x and y, which represents the point (x,y). The function returns the angle between the x-axis and the vector (0,0) to (x,y).
+
 4.	What is the difference between log and log10?
+
+Log is base e and log10 is base 10.
+
 5.	Given a right triangle with sides x = 5 and y = 13, calculate the length of the hypotenuse (show code)
-6.	If a population starts with a density of 5 individuals/hectare and grows exponentially at a growth rate r=0.04/year, what is the size of the population in π years? (show code)
-7.	Subtract the month you were born from the remainder left after you divide the year you were born by the day you were born (show code)
+
+atan(opposite/adjacent) = x
+hypotenuse = opposite/sin(x)
+hypotenuse = opposite/sin(atan(opposite/adjacent))
+```{r}
+5/(sin(atan(5/13)))
 ```
 
+6.	If a population starts with a density of 5 individuals/hectare and grows exponentially at a growth rate r=0.04/year, what is the size of the population in π years? (show code)
+
+```{r}
+5*(1+0.04)^pi
+```
+
+7.	Subtract the month you were born from the remainder left after you divide the year you were born by the day you were born (show code)
+
+```{r}
+1987%%13-3
+```
 
 ## R Scripts
 
@@ -195,12 +240,35 @@ prod(1:10)		## product of values in a vector
 ```
 Questions:
 8.	Describe the difference in output between sum and cumsum.
+
+Sum gives a single number (the sum of numbers 1-10) while cumsum gives you 1, 1+2, 1+2+3, ..., sum(1:9)+10
+
 9.	Generate a sequence of even numbers from -6 to 6
-10.	Generate a sequence of values from -4.8 to -3.43 that is length 8 (show code)
-a.	What is the difference between values in this sequence?
-b.	What is the sum of the exponential of this sequence?
-11.	Calculate a second difference [a difference of differences] for the sequence 1:10 (show code)
+```{r}
+seq(-6,6,by=2)
 ```
+
+10.	Generate a sequence of values from -4.8 to -3.43 that is length 8 (show code)
+```{r}
+seq(-4.8,-3.43,length=8)
+```
+
+a.	What is the difference between values in this sequence?
+```{r}
+diff(seq(-4.8,-3.43,length=8))
+```
+0.1957143
+
+b.	What is the sum of the exponential of this sequence?
+```{r}
+sum(exp(seq(-4.8,-3.43,length=8)))
+```
+
+11.	Calculate a second difference [a difference of differences] for the sequence 1:10 (show code)
+```{r}
+diff(diff(1:10))
+```
+
 
 ## Loading and Saving Data
 
@@ -257,6 +325,17 @@ Within the Environment window, clicking on a variable will show you the contents
 
 ```
 12.	Save the frog data file delimited in a pipe-delimited format (i.e. separated by ‘|’). Open the file up in a text editor and cut-and-paste the first few lines of the file into your Rscript file (just so I can see what you did).  Load the data back up into R as ‘dat2’ (show code)
+```
+
+```{r}
+write.table(dat,"my_frogs.csv",row.names=FALSE,sep="|")
+```
+frogs|"tadpoles"|"color"|"spots"
+1.1|2.03698175474231|"red"|TRUE
+1.3|2.87623092770957|"red"|FALSE
+1.7|3.06252807802208|"red"|TRUE
+```{r}
+dat2 = read.table("C:/Users/rose/Documents/EE509/my_frogs.csv",header=TRUE, sep = "|")
 ```
 
 
@@ -331,8 +410,23 @@ as.matrix(dat)
 
 ``` 
 13.	Show just the spots data as characters
+
+```{r}
+as.character(dat$spots)
+```
+
 14.	Show the 3rd through 8th rows of the 1st  though 3rd columns
+
+```{r}
+dat[3:8,1:3]
+```
+
 15.	Show the first 3 rows
+```{r}
+dat[1:3,]
+```
+
+
 ```
 
 ## Combining vectors
@@ -367,7 +461,15 @@ rbind(q,p)		# bind as rows
    
 ```
 16.	Create a character vector that contains the names of 4 super heros.
+```{r}
+xwomen <- c("kittypryde", "rogue", "jubilee", "emmafrost")
+```
+
 17.	Show just the odd numbered rows in the frog data. Write this code for the GENERAL CASE (i.e. don’t just type c(1,3,5,…) but use functions that you learned in previous sections to set up the sequence.
+```{r}
+dat[seq(1, nrow(dat), by =2),]
+```
+
 ```
 
 ## Logical operators and indexing
@@ -474,11 +576,30 @@ as.numeric(y>13)
 ``` 
 18.	For the frog data set: 
   a.	display just the rows where frogs have spots
+```{r}
+  dat[dat$spots == TRUE,]
+```  
   b.	display just the rows where frogs are blue
+```{r}
+  dat[dat$color == "blue",]
+``` 
   c.	how many blue tadpoles are there?
+```{r}
+  sum(dat$color == "blue")
+```  
   d.	create a new object containing just the rows where there are between 3 and 5 tadpoles
+```{r}
+  taddies <- dat[dat$tadpoles>3 & dat$tadpoles<5,]
+  taddies
+```
   e.	display just the rows where there are less than 2.5 red frogs
+```{r}
+  dat[dat$frogs<2.5,]
+``` 
   f.	display where either frogs do not have spots or there are more than 5 frogs
+```{r}
+  dat[dat$spots == FALSE|dat$frogs>5,]
+``` 
 ```
 ## Plots, tables, and exploratory analysis
 
@@ -540,11 +661,33 @@ Within the Plot window, graphs can be cut-and-pasted into other documents or sav
 
 
   19.	Plot the following lines from 0 to 3 (hint: define x as a sequence with a small step size). Make sure to make the resolution of x sufficiently small to see the curves
+```{r}
+x = seq(1,100, by = 0.1)
+```
    a.	ln(x)
+```{r}
+plot(log(x), type="n")
+lines(log(x))	
+```
    b. $e^{-x}$
+  
+```{r}
+plot(exp(-x), type="n")
+lines(exp(-x))  
+```
   20.	Make a barplot of the median number of frogs grouped by whether they have spots or not.
+```{r}
+barplot(tapply(dat$frogs,dat$spots,median), names.arg = c("no spots", "spots")) 
+```  
   21.	Plot a histogram of blue frogs
+```{r}
+hist(dat[dat$color == "blue",1])
+```
   22.	Use apply to calculate the across-population standard deviations in the numbers of frogs and tadpoles
+```{r}
+apply(dat[,1:2],2,sd)
+```
+
 
 ## Classical tests
 
@@ -596,12 +739,29 @@ legend("topleft",
        )
 ```
 
-``` 
 23.	Using the frog data
   a.	Fit a linear model of tadpoles as a function of frogs for just the RED individuals and report the summary data of the fit.  
-  b.	Make a scatter plot of this data that includes the regression line
-  c.	Fit a series of linear models of tadpoles as a function of frogs, spots, color, and their interaction terms. Build up from a simple model to the most complex model that is supported by the available data (i.e. all terms should be significant). Also test the full model that includes all variables and interaction terms.
+```{r}
+reg.red = lm(tadpoles ~ frogs,data=subset(dat, color == "red")) 
+summary(reg.red)
 ```
+  
+  b.	Make a scatter plot of this data that includes the regression line
+```{r}
+plot(tadpoles ~ frogs,data=subset(dat, color == "red"))
+abline(reg.red)
+```
+
+  c.	Fit a series of linear models of tadpoles as a function of frogs, spots, color, and their interaction terms. Build up from a simple model to the most complex model that is supported by the available data (i.e. all terms should be significant). Also test the full model that includes all variables and interaction terms.
+
+The most complex model with all terms significant is tadpoles ~ frogs.
+```{r}
+reg.sink = lm(tadpoles ~ frogs+spots+color+frogs*spots+frogs*color+color*spots, data = dat)
+summary(reg.sink)
+``` 
+```
+
+
 
 ## IF statements
 
@@ -650,6 +810,11 @@ Aside: As is very common in R, as we learn more we often find more efficient way
 
 ```
 24.	Write an if statement that makes a scatter plot of x if all the values are positive, and plots a histogram otherwise.
+```{r}
+x = -1:10
+ifelse(all(x>0), plot(x),hist(x))
+```
+
 ```
 
 ## Defining custom functions
@@ -685,6 +850,36 @@ my.division(x,"5")
  
 ```
 25.	Convert the more complicated graphing example at the end of  “Classic Tests” into a function that will make the same plots for any data set. Show how you would call the function passing it just the subset of data where there are 5 or more tadpoles.
+```{r}
+my.plot = function(x,y,color,spots){
+  plot(y ~ x,
+     cex=1.5,      	# increase the symbol size
+     col=as.character(color),	# change the symbol color by name
+     pch=spots+1,			# change the symbol (by number)
+     cex.axis=1.3,			# increase the font size on the axis 
+     xlab="Frog Density",		# label the x axis
+     ylab="Tadpole Density",		# label the y axis
+     cex.lab=1.3,			# increase the axis label font size
+     main="Frog Reproductive Effort", # title
+     cex.main=2			# increase title font size
+     )
+abline(lm(y~x),col="green",		# add the regression line
+     ,lwd=3)				# increase the line width
+legend("topleft",
+       c("Red no spot","Blue no spot","Red spots","Blue Spots"),
+       pch=c(1,1,2,2),
+       col=c("red","blue","red","blue"),cex=1.3
+       )
+}
+
+dat.sub = subset(dat,tadpoles>=5)
+attach(dat.sub)
+my.plot(frogs,tadpoles,color,spots)
+detach(dat.sub)
+
+```
+
+
 ```
 
 ## For loops
@@ -721,7 +916,25 @@ plot(N)
 
 ```
 26.	Starting with a vector x = 1:10, write a for loop that adds 5 to each value in the vector. Note that it is permissible to assign an element in a vector to itself (e.g. x[i] = x[i] + 5)
+```{r}
+x = 1:10
+for(i in 1:10){
+  x[i]= x[i]+5
+}
+```
+
+
 27.	Modify the logistic growth code to simulate discrete-time exponential growth and plot the output.
+```{r}
+NT = 100    	## number of time steps
+N0 = 1				## initial population size
+r = 0.2				## population growth rate
+N = rep(N0,NT)
+for(t in 2:NT){
+	N[t] = N[t-1]*(1+r)   ## discrete exponential growth
+}
+plot(N)
+```
 ```
 
 ## Vector and Matrix Math
